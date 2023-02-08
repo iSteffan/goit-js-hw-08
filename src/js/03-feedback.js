@@ -9,16 +9,19 @@ formRef.addEventListener('input', throttle(onInputClick, 500)),
 
 formAutoFill();
 
-const formData = {};
-
 function onInputClick(e) {
-  formData[e.target.name] = e.target.value;
+  const formData = { email: emailRef.value, message: textRef.value };
 
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }
 
 function onSubmitClick(e) {
   e.preventDefault();
+
+  if (textRef.value === '' || emailRef.value === '') {
+    return alert('Write down all data');
+  }
+
   const formDataJSON = localStorage.getItem('feedback-form-state');
   const formDataParseJSON = JSON.parse(formDataJSON);
   console.log(formDataParseJSON);
